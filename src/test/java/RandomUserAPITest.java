@@ -9,9 +9,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class RandomUserAPITest {
+
+    @ParameterizedTest
     //Две позитивные проверки: отправить get запрос с парамтерами "male", "female";
     //Получить ответ со статус кодом 200 и телом, в котором значение парамтера gender = "male", "female" соответственно.
-    @ParameterizedTest
     @CsvSource({"male", "female"})
     public void testPositiveRandomUserWithGender(String gender) {
 
@@ -21,8 +22,10 @@ public class RandomUserAPITest {
         assertThat(response.jsonPath().getString("results[0].gender")).isEqualTo(gender);
 
     }
-    //Отправить запрос с пустым значением в параметре. Получить ответ со статус кодом 400
+
     @Test
+    //Отправить запрос с пустым значением в параметре. Получить ответ со статус кодом 400
+    //Не уверен, что исходя из документации тут баг, руководствовался  логикой
     public void testNegativeRandomUserWithInvalidGender() {
         Response response = RandomUserAPITestStep.getRandomUserByGender("");
 
